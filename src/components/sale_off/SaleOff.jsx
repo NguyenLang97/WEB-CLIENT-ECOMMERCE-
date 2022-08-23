@@ -1,6 +1,6 @@
 import React from 'react'
 import { Carousel } from 'bootstrap'
-import './SaleOff.scss'
+import './sale_off.scss'
 
 // Do cả chương trình chỉ có 1 list carousel
 // Nên lưu thẳng vào đây để đỡ tốn chi phí query

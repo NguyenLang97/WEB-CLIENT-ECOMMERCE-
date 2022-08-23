@@ -1,15 +1,15 @@
 import React, { useState } from 'react'
-import Helmet from '../components/helmet/Helmet'
-import CommonSection from '../components/ui/common-section/CommonSection'
+import Helmet from '../../components/helmet/Helmet'
+import CommonSection from '../../components/ui/common-section/CommonSection'
 
 import { Container, Row, Col } from 'reactstrap'
 
-import products from '../assets/fake-data/products'
-import ProductCard from '../components/ui/product-card/ProductCard'
+import products from '../../assets/fake-data/products'
+import ProductCard from '../../components/ui/product-card/ProductCard'
 import ReactPaginate from 'react-paginate'
 
-import '../styles/all-foods.css'
-import '../styles/pagination.css'
+import './all_products.css'
+import '../../styles/pagination.css'
 
 const AllProducts = () => {
     const [searchTerm, setSearchTerm] = useState('')

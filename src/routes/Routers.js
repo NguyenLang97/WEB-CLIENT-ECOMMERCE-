@@ -1,14 +1,14 @@
-import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import React from 'react'
+import { Routes, Route, Navigate } from 'react-router-dom'
 
-import Home from "../pages/Home";
-import AllProducts from "../pages/AllProducts";
-import ProductDetails from "../pages/ProductDetails";
-import Cart from "../pages/Cart";
-import Checkout from "../pages/Checkout";
-import Contact from "../pages/Contact";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
+import Home from '../pages/home/Home'
+import AllProducts from '../pages/all_products/AllProducts'
+import ProductDetails from '../pages/product_details/ProductDetails'
+import Cart from '../pages/cart/Cart'
+import Checkout from '../pages/checkout/Checkout'
+import Contact from '../pages/contact/Contact'
+import Login from '../pages/login/Login'
+import Register from '../pages/register/Register'
 
 const Routers = () => {
     return (
@@ -23,7 +23,7 @@ const Routers = () => {
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />
         </Routes>
-    );
-};
+    )
+}
 
-export default Routers;
+export default Routers

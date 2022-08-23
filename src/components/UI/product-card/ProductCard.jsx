@@ -1,6 +1,6 @@
 import React from 'react'
 
-import '../../../styles/product-card.css'
+import './product-card.css'
 
 import { Link } from 'react-router-dom'
 

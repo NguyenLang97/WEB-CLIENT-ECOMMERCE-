@@ -1,11 +1,11 @@
 import React from 'react'
 
-import CommonSection from '../components/ui/common-section/CommonSection'
-import Helmet from '../components/helmet/Helmet'
-import '../styles/cart-page.css'
+import CommonSection from '../../components/ui/common-section/CommonSection'
+import Helmet from '../../components/helmet/Helmet'
+import './cart-page.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
-import { cartActions } from '../store/shopping-cart/cartSlice'
+import { cartActions } from '../../store/shopping-cart/cartSlice'
 import { Link } from 'react-router-dom'
 
 const Cart = () => {

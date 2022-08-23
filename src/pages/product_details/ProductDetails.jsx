@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 
-import products from '../assets/fake-data/products'
+import products from '../../assets/fake-data/products'
 import { useParams } from 'react-router-dom'
-import Helmet from '../components/helmet/Helmet'
-import CommonSection from '../components/ui/common-section/CommonSection'
+import Helmet from '../../components/helmet/Helmet'
+import CommonSection from '../../components/ui/common-section/CommonSection'
 import { Container, Row, Col } from 'reactstrap'
 
 import { useDispatch } from 'react-redux'
-import { cartActions } from '../store/shopping-cart/cartSlice'
+import { cartActions } from '../../store/shopping-cart/cartSlice'
 
-import '../styles/product-details.css'
+import './product-details.css'
 
-import ProductCard from '../components/ui/product-card/ProductCard'
+import ProductCard from '../../components/ui/product-card/ProductCard'
 
 const ProductDetails = () => {
     const [tab, setTab] = useState('desc')
