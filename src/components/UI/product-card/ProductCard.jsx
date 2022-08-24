@@ -9,7 +9,6 @@ import { cartActions } from '../../../store/shopping-cart/cartSlice'
 
 const ProductCard = (props) => {
     const { id, title, img, price } = props.item
-    console.log(img)
     const dispatch = useDispatch()
 
     const addToCart = () => {

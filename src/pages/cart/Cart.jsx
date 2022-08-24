@@ -62,7 +62,7 @@ const Cart = () => {
 }
 
 const Tr = (props) => {
-    const { id, image01, title, price, quantity } = props.item
+    const { id, img, title, price, quantity } = props.item
     const dispatch = useDispatch()
 
     const deleteItem = () => {
@@ -71,7 +71,7 @@ const Tr = (props) => {
     return (
         <tr>
             <td className="text-center cart__img-box">
-                <img src={image01} alt="" />
+                <img src={img[0].img} alt="" />
             </td>
             <td className="text-center">{title}</td>
             <td className="text-center">${price}</td>

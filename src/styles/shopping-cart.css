@@ -34,13 +34,13 @@
   cursor: pointer;
 }
 .cart__item-list {
-  height: calc(100vh - 140px);
+  height: calc(100vh - 180px);
   overflow-y: scroll;
 }
 
 .cart__bottom {
   position: absolute;
-  bottom: 0;
+  bottom: 40px;
   left: 0;
   padding: 5px 20px;
   width: 100%;
