@@ -4,7 +4,7 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 
 import { Container, Row, Col } from 'reactstrap'
 
-import products from '../../assets/fake-data/products'
+import products from '../../api/products'
 import ProductCard from '../../components/ui/product-card/ProductCard'
 import ReactPaginate from 'react-paginate'
 

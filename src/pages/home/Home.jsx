@@ -5,15 +5,18 @@ import { Container, ListGroup, ListGroupItem, Col, Row } from 'reactstrap'
 import '../../styles/hero-section.css'
 
 import Category from '../../components/ui/category/Category.jsx'
+import _ from 'lodash'
 
 import './home.scss'
 
-import featureImg01 from '../../assets/images/service-01.png'
-import featureImg02 from '../../assets/images/service-02.png'
-import featureImg03 from '../../assets/images/service-03.png'
+// import products from '../../api/products'
 
-import products from '../../assets/fake-data/products.js'
-
+import {
+    collection,
+    // getDocs,
+    onSnapshot,
+} from 'firebase/firestore'
+import { db } from '../../firebase/firebase_config'
 import foodCategoryImg01 from '../../assets/images/hamburger.png'
 import foodCategoryImg02 from '../../assets/images/pizza.png'
 import foodCategoryImg03 from '../../assets/images/bread.png'
@@ -23,58 +26,59 @@ import SaleOff from '../../components/sale_off/SaleOff'
 import FamousBrand from '../../components/famous_brand/FamousBrand'
 // import DiscountList from '../../components/discount_list/DiscountList'
 
-const featureData = [
-    {
-        title: 'Quick Delivery',
-        imgUrl: featureImg01,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.',
-    },
-
-    {
-        title: 'Super Dine In',
-        imgUrl: featureImg02,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.',
-    },
-    {
-        title: 'Easy Pick Up',
-        imgUrl: featureImg03,
-        desc: 'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Minus, doloremque.',
-    },
-]
-
 const Home = () => {
     const [category, setCategory] = useState('ALL')
-    const [allProducts, setAllProducts] = useState(products)
-
-    const [hotPizza, setHotPizza] = useState([])
+    const [allProducts, setAllProducts] = useState([])
+    const [filter, setFilter] = useState(allProducts)
+    const [loading, setLoading] = useState(true)
+    const [hotProduct, setHotProduct] = useState([])
 
     useEffect(() => {
-        const filteredPizza = products.filter((item) => item.category === 'Pizza')
-        const slicePizza = filteredPizza.slice(0, 4)
-        setHotPizza(slicePizza)
+        const unsub = onSnapshot(
+            collection(db, 'products'),
+            (snapShot) => {
+                let list = []
+                snapShot.docs.forEach((doc) => {
+                    list.push({ id: doc.id, ...doc.data() })
+                })
+                const cloneList = _.clone(list)
+                setFilter(cloneList)
+                setAllProducts(list)
+
+                const filteredPizza = list.filter((item) => item.category === 'Điện thoại')
+                const slicePizza = filteredPizza.slice(0, 4)
+                setHotProduct(slicePizza)
+                setLoading(false)
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+        return () => {
+            unsub()
+        }
     }, [])
+    // console.log('allProducts:', allProducts)
+    const filterProduct = (category) => {
+        const updateProduct = allProducts.filter((item) => item.category === category)
+        setFilter(updateProduct)
+    }
 
     useEffect(() => {
         if (category === 'ALL') {
-            setAllProducts(products)
+            setFilter(allProducts)
         }
 
-        if (category === 'BURGER') {
-            const filteredProducts = products.filter((item) => item.category === 'Burger')
-
-            setAllProducts(filteredProducts)
+        if (category === 'Laptop') {
+            filterProduct('Laptop')
         }
 
-        if (category === 'PIZZA') {
-            const filteredProducts = products.filter((item) => item.category === 'Pizza')
-
-            setAllProducts(filteredProducts)
+        if (category === 'PC') {
+            filterProduct('PC')
         }
 
-        if (category === 'BREAD') {
-            const filteredProducts = products.filter((item) => item.category === 'Bread')
-
-            setAllProducts(filteredProducts)
+        if (category === 'Điện thoại') {
+            filterProduct('Điện thoại')
         }
     }, [category])
 
@@ -99,6 +103,7 @@ const Home = () => {
                 </Container>
             </section>
 
+            {/* Quảng cáo */}
             <section>
                 <Container>
                     <Row>
@@ -123,24 +128,24 @@ const Home = () => {
                                 <button className={`all__btn  ${category === 'ALL' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('ALL')}>
                                     All
                                 </button>
-                                <button className={`d-flex align-items-center gap-2 ${category === 'BURGER' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('BURGER')}>
+                                <button className={`d-flex align-items-center gap-2 ${category === 'Laptop' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Laptop')}>
                                     <img src={foodCategoryImg01} alt="" />
-                                    Burger
+                                    Laptop
                                 </button>
 
-                                <button className={`d-flex align-items-center gap-2 ${category === 'PIZZA' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('PIZZA')}>
+                                <button className={`d-flex align-items-center gap-2 ${category === 'Điện thoại' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Điện thoại')}>
                                     <img src={foodCategoryImg02} alt="" />
-                                    Pizza
+                                    Điện thoại
                                 </button>
 
-                                <button className={`d-flex align-items-center gap-2 ${category === 'BREAD' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('BREAD')}>
+                                <button className={`d-flex align-items-center gap-2 ${category === 'PC' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('PC')}>
                                     <img src={foodCategoryImg03} alt="" />
-                                    Bread
+                                    PC
                                 </button>
                             </div>
                         </Col>
 
-                        {allProducts.map((item) => (
+                        {filter.map((item) => (
                             <Col lg="3" md="4" sm="6" xs="6" key={item.id} className="mt-5">
                                 <ProductCard item={item} />
                             </Col>
@@ -149,6 +154,7 @@ const Home = () => {
                 </Container>
             </section>
 
+            {/* Quảng cáo */}
             <section>
                 <Container>
                     <Row>
@@ -161,14 +167,15 @@ const Home = () => {
                 </Container>
             </section>
 
+            {/* Sản phẩm bán chạy: Laptop */}
             <section className="pt-0">
                 <Container>
                     <Row>
                         <Col lg="12" className="text-center mb-5 ">
-                            <h2>Hot Pizza</h2>
+                            <h2>Sản phẩm bán chạy</h2>
                         </Col>
 
-                        {hotPizza.map((item) => (
+                        {hotProduct.map((item) => (
                             <Col lg="3" md="4" sm="6" xs="6" key={item.id}>
                                 <ProductCard item={item} />
                             </Col>

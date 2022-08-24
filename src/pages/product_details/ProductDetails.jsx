@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react'
 
-import products from '../../assets/fake-data/products'
+import {
+    collection,
+    // getDocs,
+    onSnapshot,
+} from 'firebase/firestore'
+import { db } from '../../firebase/firebase_config'
 import { useParams } from 'react-router-dom'
 import Helmet from '../../components/helmet/Helmet'
 import CommonSection from '../../components/ui/common-section/CommonSection'
@@ -18,14 +23,42 @@ const ProductDetails = () => {
     const [enteredName, setEnteredName] = useState('')
     const [enteredEmail, setEnteredEmail] = useState('')
     const [reviewMsg, setReviewMsg] = useState('')
+    const [allProducts, setAllProducts] = useState([])
+    const [previewImg, setPreviewImg] = useState('')
     const { id } = useParams()
     const dispatch = useDispatch()
 
-    const product = products.find((product) => product.id === id)
-    const [previewImg, setPreviewImg] = useState(product.image01)
-    const { title, price, category, desc, image01 } = product
+    useEffect(() => {
+        const unsub = onSnapshot(
+            collection(db, 'products'),
+            (snapShot) => {
+                let list = []
+                snapShot.docs.forEach((doc) => {
+                    list.push({ id: doc.id, ...doc.data() })
+                })
+                setAllProducts(list)
+                console.log('1')
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+        return () => {
+            unsub()
+        }
+    }, [])
 
-    const relatedProduct = products.filter((item) => category === item.category)
+    const product = allProducts.find((product) => product.id === id)
+
+    console.log({ product })
+    console.log('2')
+    
+    if(product) {
+        setPreviewImg(product.img[0].img)
+    }
+    const { title, price, category, desc, img } = product
+
+    const relatedProduct = allProducts.filter((item) => category === item.category)
 
     const addItem = () => {
         dispatch(
@@ -33,7 +66,7 @@ const ProductDetails = () => {
                 id,
                 title,
                 price,
-                image01,
+                img,
             })
         )
     }
@@ -44,13 +77,13 @@ const ProductDetails = () => {
         console.log(enteredName, enteredEmail, reviewMsg)
     }
 
-    useEffect(() => {
-        setPreviewImg(product.image01)
-    }, [product])
+    // useEffect(() => {
+    //     setPreviewImg(product.img[0].img)
+    // }, [product])
 
-    useEffect(() => {
-        window.scrollTo(0, 0)
-    }, [product])
+    // useEffect(() => {
+    //     window.scrollTo(0, 0)
+    // }, [product])
 
     return (
         <Helmet title="Product-details">
@@ -61,16 +94,18 @@ const ProductDetails = () => {
                     <Row>
                         <Col lg="2" md="2">
                             <div className="product__images ">
-                                <div className="img__item mb-3" onClick={() => setPreviewImg(product.image01)}>
-                                    <img src={product.image01} alt="" className="w-50" />
-                                </div>
-                                <div className="img__item mb-3" onClick={() => setPreviewImg(product.image02)}>
+                                {img.map((imgItem) => (
+                                    <div className="img__item mb-3" onClick={() => setPreviewImg(product.imgItem.img)}>
+                                        <img src={product.imgItem.img} alt="" className="w-50" />
+                                    </div>
+                                ))}
+                                {/* <div className="img__item mb-3" onClick={() => setPreviewImg(product.image02)}>
                                     <img src={product.image02} alt="" className="w-50" />
                                 </div>
 
                                 <div className="img__item" onClick={() => setPreviewImg(product.image03)}>
                                     <img src={product.image03} alt="" className="w-50" />
-                                </div>
+                                </div> */}
                             </div>
                         </Col>
 
