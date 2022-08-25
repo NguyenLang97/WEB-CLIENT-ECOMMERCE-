@@ -46,7 +46,7 @@
 }
 
 .tab__active {
-    color: #df2020;
+    color: #3555c5;
 }
 
 .form {
@@ -146,4 +146,8 @@
     .product__main-img {
         margin-bottom: 20px;
     }
+}
+
+.policy {
+    border-radius: 8px;
 }

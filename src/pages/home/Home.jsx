@@ -123,7 +123,7 @@ const Home = () => {
                 <Container>
                     <Row>
                         <Col lg="12" className="text-center">
-                            <h2>Popular Products</h2>
+                            <h2>Sản phẩm phổ biến</h2>
                         </Col>
 
                         <Col lg="12">

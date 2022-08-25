@@ -11,19 +11,19 @@ import "./header.css";
 
 const nav__links = [
     {
-        display: "Home",
+        display: "Trang chủ",
         path: "/home",
     },
     {
-        display: "Products",
+        display: "Sản phẩm",
         path: "/products",
     },
     {
-        display: "Cart",
+        display: "Giỏ hàng",
         path: "/cart",
     },
     {
-        display: "Contact",
+        display: "Liên hệ",
         path: "/contact",
     },
 ];

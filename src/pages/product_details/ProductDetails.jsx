@@ -18,6 +18,7 @@ import './product_details.css'
 import products from '../../api/products'
 import ProductCard from '../../components/ui/product-card/ProductCard'
 import { useMemo } from 'react'
+import Policy from './Policy/Policy'
 
 const ProductDetails = () => {
     const [tab, setTab] = useState('desc')
@@ -107,13 +108,13 @@ const ProductDetails = () => {
                                     </div>
                                 </Col>
 
-                                <Col lg="4" md="4">
+                                <Col lg="3" md="3">
                                     <div className="product__main-img">
                                         <img src={previewImg || product.img[0].img} alt="" className="w-100" />
                                     </div>
                                 </Col>
 
-                                <Col lg="6" md="6">
+                                <Col lg="4" md="4">
                                     <div className="single__product-content">
                                         <h2 className="product__title mb-3">{product.title}</h2>
                                         <p className="product__price">
@@ -128,6 +129,9 @@ const ProductDetails = () => {
                                             Add to Cart
                                         </button>
                                     </div>
+                                </Col>
+                                <Col lg="3" md="3">
+                                    <Policy />
                                 </Col>
 
                                 <Col lg="12">

@@ -29,11 +29,11 @@
 }
 
 .menu a:hover {
-    color: #df2020;
+    color: #3555c5;
 }
 
 .active__menu {
-    color: #df2020 !important;
+    color: #3555c5 !important;
 }
 
 .cart__icon i,
@@ -52,7 +52,7 @@
     position: absolute;
     top: 30px;
     right: -10px;
-    background: #df2020;
+    background: #3555c5;
     color: #fff;
     width: 15px;
     height: 15px;
@@ -75,7 +75,7 @@
     left: 0;
     background: #fff;
     z-index: 99;
-    box-shadow: 5px 5px 15px -5px #fde4e4;
+    box-shadow: 5px 5px 15px -5px #d5d0d0;
 }
 
 @media only screen and (max-width: 992px) {
@@ -137,7 +137,7 @@
         height: 80px;
         line-height: 80px;
     }
- 
+
     .logo img {
         margin-top: -30px !important;
     }

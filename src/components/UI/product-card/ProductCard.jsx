@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux'
 import { cartActions } from '../../../store/shopping-cart/cartSlice'
 
 const ProductCard = (props) => {
-    const { id, title, img, price } = props.item
+    const { id, title, img, price,total } = props.item
     const dispatch = useDispatch()
 
     const addToCart = () => {
@@ -34,11 +34,13 @@ const ProductCard = (props) => {
                 <h5>
                     <Link to={`/products/${id}`}>{title}</Link>
                 </h5>
-                <div className=" d-flex align-items-center justify-content-between ">
+                <div className=" d-flex flex-column align-items-center justify-content-between ">
                     <span className="product__price">${price}</span>
+
                     <button className="addToCart__btn" onClick={addToCart}>
                         Add to Cart
                     </button>
+
                 </div>
             </div>
         </div>
