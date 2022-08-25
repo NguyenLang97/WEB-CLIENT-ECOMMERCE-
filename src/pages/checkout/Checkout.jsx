@@ -5,6 +5,7 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
 
 import './checkout.css'
+import CartTable from '../cart_page/cartTable/CartTable'
 
 const Checkout = () => {
     const [enterName, setEnterName] = useState('')
@@ -38,6 +39,15 @@ const Checkout = () => {
     return (
         <Helmet title="Checkout">
             <CommonSection title="Checkout" />
+            <selection>
+                <Container>
+                    <Row>
+                        <Col lg="12">
+                            <CartTable />
+                        </Col>
+                    </Row>
+                </Container>
+            </selection>
             <section>
                 <Container>
                     <Row>
@@ -60,9 +70,9 @@ const Checkout = () => {
                                 <div className="form__group">
                                     <input type="text" placeholder="City" required onChange={(e) => setEnterCity(e.target.value)} />
                                 </div>
-                                <div className="form__group">
+                                {/* <div className="form__group">
                                     <input type="number" placeholder="Postal code" required onChange={(e) => setPostalCode(e.target.value)} />
-                                </div>
+                                </div> */}
                                 <button type="submit" className="addTOCart__btn">
                                     Payment
                                 </button>

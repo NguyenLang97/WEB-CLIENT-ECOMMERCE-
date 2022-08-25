@@ -4,7 +4,7 @@ import Helmet from '../../components/helmet/Helmet'
 import { Container, ListGroup, ListGroupItem, Col, Row } from 'reactstrap'
 import '../../styles/hero-section.css'
 
-import Category from '../../components/ui/category/Category.jsx'
+// import Category from '../../components/ui/category/Category.jsx'
 import _ from 'lodash'
 
 import './home.scss'
@@ -20,11 +20,14 @@ import { db } from '../../firebase/firebase_config'
 import foodCategoryImg01 from '../../assets/images/hamburger.png'
 import foodCategoryImg02 from '../../assets/images/pizza.png'
 import foodCategoryImg03 from '../../assets/images/bread.png'
+import laptopImg from '../../assets/products/laptop_32px.png'
+import mobileImg from '../../assets/products/mobile_32px.png'
+import mouseImg from '../../assets/products/mouse_32px.png'
 
 import ProductCard from '../../components/ui/product-card/ProductCard.jsx'
 import SaleOff from '../../components/sale_off/SaleOff'
 import FamousBrand from '../../components/famous_brand/FamousBrand'
-// import DiscountList from '../../components/discount_list/DiscountList'
+// import DiscountList from '../../components/DiscountList/index'
 
 const Home = () => {
     const [category, setCategory] = useState('ALL')
@@ -73,8 +76,8 @@ const Home = () => {
             filterProduct('Laptop')
         }
 
-        if (category === 'PC') {
-            filterProduct('PC')
+        if (category === 'Mouse') {
+            filterProduct('Mouse')
         }
 
         if (category === 'Điện thoại') {
@@ -129,18 +132,18 @@ const Home = () => {
                                     All
                                 </button>
                                 <button className={`d-flex align-items-center gap-2 ${category === 'Laptop' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Laptop')}>
-                                    <img src={foodCategoryImg01} alt="" />
+                                    <img src={laptopImg} alt="" />
                                     Laptop
                                 </button>
 
                                 <button className={`d-flex align-items-center gap-2 ${category === 'Điện thoại' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Điện thoại')}>
-                                    <img src={foodCategoryImg02} alt="" />
+                                    <img src={mobileImg} alt="" />
                                     Điện thoại
                                 </button>
 
-                                <button className={`d-flex align-items-center gap-2 ${category === 'PC' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('PC')}>
-                                    <img src={foodCategoryImg03} alt="" />
-                                    PC
+                                <button className={`d-flex align-items-center gap-2 ${category === 'Mouse' ? 'foodBtnActive' : ''} `} onClick={() => setCategory('Mouse')}>
+                                    <img src={mouseImg} alt="" />
+                                    Chuột
                                 </button>
                             </div>
                         </Col>

@@ -1,10 +1,15 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Helmet from '../../components/helmet/Helmet'
 import CommonSection from '../../components/ui/common-section/CommonSection'
 
 import { Container, Row, Col } from 'reactstrap'
+import {
+    collection,
+    // getDocs,
+    onSnapshot,
+} from 'firebase/firestore'
+import { db } from '../../firebase/firebase_config'
 
-import products from '../../api/products'
 import ProductCard from '../../components/ui/product-card/ProductCard'
 import ReactPaginate from 'react-paginate'
 
@@ -15,8 +20,30 @@ const AllProducts = () => {
     const [searchTerm, setSearchTerm] = useState('')
 
     const [pageNumber, setPageNumber] = useState(0)
+    const [allProducts, setAllProducts] = useState([])
 
-    const searchedProduct = products.filter((item) => {
+    useEffect(() => {
+        const unsub = onSnapshot(
+            collection(db, 'products'),
+            (snapShot) => {
+                let list = []
+                snapShot.docs.forEach((doc) => {
+                    list.push({ id: doc.id, ...doc.data() })
+                })
+                setAllProducts(list)
+
+                // setLoading(false)
+            },
+            (error) => {
+                console.log(error)
+            }
+        )
+        return () => {
+            unsub()
+        }
+    }, [])
+
+    const searchedProduct = allProducts.filter((item) => {
         if (searchTerm.value === '') {
             return item
         }

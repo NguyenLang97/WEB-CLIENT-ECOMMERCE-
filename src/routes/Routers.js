@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import Home from '../pages/home/Home'
 import AllProducts from '../pages/all_products/AllProducts'
 import ProductDetails from '../pages/product_details/ProductDetails'
-import Cart from '../pages/cart/Cart'
+import CartPage from '../pages/cart_page/CartPage'
 import Checkout from '../pages/checkout/Checkout'
 import Contact from '../pages/contact/Contact'
 import Login from '../pages/login/Login'
@@ -17,7 +17,7 @@ const Routers = () => {
             <Route path="/home" element={<Home />} />
             <Route path="/products" element={<AllProducts />} />
             <Route path="/products/:id" element={<ProductDetails />} />
-            <Route path="/cart" element={<Cart />} />
+            <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
