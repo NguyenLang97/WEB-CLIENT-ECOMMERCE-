@@ -88,9 +88,9 @@ const Home = () => {
                 <SaleOff />
             </section>
 
-            <section className="pt-0">
+            {/* <section className="pt-0">
                 <Category />
-            </section>
+            </section> */}
 
             {/* Thương hiệu nổi bật */}
             <section>

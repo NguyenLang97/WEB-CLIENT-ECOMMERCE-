@@ -56,11 +56,15 @@ const ProductDetails = () => {
 
     console.log('allProducts', allProducts)
     console.log({ product })
-    const { title, price, category, description, img } = product
+
+    // useEffect(() => {
+    //     const { title, price, category, description, img } = product
+    // }, [product])
     const relatedProduct = allProducts.filter((item) => product.category === item.category)
 
     const addItem = () => {
         if (product) {
+            const { title, price, category, description, img } = product
             dispatch(
                 cartActions.addItem({
                     id,
