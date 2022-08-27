@@ -12,10 +12,9 @@ import CommonSection from '../../components/ui/common-section/CommonSection'
 import { Container, Row, Col } from 'reactstrap'
 
 import { useDispatch } from 'react-redux'
-import { cartActions } from '../../store/shopping-cart/cartSlice'
+import { addItem } from '../../../src/store/cart/cart.action'
 
 import './product_details.css'
-import products from '../../api/products'
 import ProductCard from '../../components/ui/product-card/ProductCard'
 import { useMemo } from 'react'
 import Policy from './Policy/Policy'
@@ -63,11 +62,11 @@ const ProductDetails = () => {
     // }, [product])
     const relatedProduct = allProducts.filter((item) => product.category === item.category)
 
-    const addItem = () => {
+    const addProduct = () => {
         if (product) {
             const { title, price, category, description, img } = product
             dispatch(
-                cartActions.addItem({
+                addItem({
                     id,
                     title,
                     price,
@@ -125,7 +124,7 @@ const ProductDetails = () => {
                                             Category: <span>{product.category}</span>
                                         </p>
 
-                                        <button onClick={addItem} className="addTOCart__btn">
+                                        <button onClick={addProduct} className="addTOCart__btn">
                                             Add to Cart
                                         </button>
                                     </div>

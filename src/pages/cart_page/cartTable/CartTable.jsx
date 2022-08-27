@@ -1,14 +1,14 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { cartActions } from '../../../store/shopping-cart/cartSlice'
+import { deleteItem } from '../../../store/cart/cart.action'
 
 const CartTable = (props) => {
     // const { id, img, title, price, quantity } = props.item
     const dispatch = useDispatch()
-    const cartItems = useSelector((state) => state.cart.cartItems)
+    const cartItems = useSelector((state) => state.CartReducer.cartItems)
 
-    const deleteItem = (id) => {
-        dispatch(cartActions.deleteItem(id))
+    const delItem = (id) => {
+        dispatch(deleteItem(id))
     }
     return (
         <>
@@ -35,7 +35,7 @@ const CartTable = (props) => {
                                 <td className="text-center">${item.price}</td>
                                 <td className="text-center">{item.quantity}</td>
                                 <td className="text-center cart__item-del">
-                                    <i class="ri-delete-bin-line" onClick={() => deleteItem(item.id)}></i>
+                                    <i class="ri-delete-bin-line" onClick={() => delItem(item.id)}></i>
                                 </td>
                             </tr>
                         ))}

@@ -5,13 +5,12 @@ import Helmet from '../../components/helmet/Helmet'
 import './cart_page.css'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
-import { cartActions } from '../../store/shopping-cart/cartSlice'
 import { Link } from 'react-router-dom'
 import CartTable from './cartTable/CartTable'
 
 const CartPage = () => {
-    const cartItems = useSelector((state) => state.cart.cartItems)
-    const totalAmount = useSelector((state) => state.cart.totalAmount)
+    const cartItems = useSelector((state) => state.CartReducer.cartItems)
+    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
     return (
         <Helmet title="Cart">
             <CommonSection title="Your Cart" />
@@ -62,26 +61,26 @@ const CartPage = () => {
     )
 }
 
-    // const Tr = (props) => {
-    //     const { id, img, title, price, quantity } = props.item
-    //     const dispatch = useDispatch()
+// const Tr = (props) => {
+//     const { id, img, title, price, quantity } = props.item
+//     const dispatch = useDispatch()
 
-    //     const deleteItem = () => {
-    //         dispatch(cartActions.deleteItem(id))
-    //     }
-    //     return (
-    //         <tr>
-    //             <td className="text-center cart__img-box">
-    //                 <img src={img[0].img} alt="" />
-    //             </td>
-    //             <td className="text-center">{title}</td>
-    //             <td className="text-center">${price}</td>
-    //             <td className="text-center">{quantity}px</td>
-    //             <td className="text-center cart__item-del">
-    //                 <i class="ri-delete-bin-line" onClick={deleteItem}></i>
-    //             </td>
-    //         </tr>
-    //     )
-    // }
+//     const deleteItem = () => {
+//         dispatch(cartActions.deleteItem(id))
+//     }
+//     return (
+//         <tr>
+//             <td className="text-center cart__img-box">
+//                 <img src={img[0].img} alt="" />
+//             </td>
+//             <td className="text-center">{title}</td>
+//             <td className="text-center">${price}</td>
+//             <td className="text-center">{quantity}px</td>
+//             <td className="text-center cart__item-del">
+//                 <i class="ri-delete-bin-line" onClick={deleteItem}></i>
+//             </td>
+//         </tr>
+//     )
+// }
 
 export default CartPage

@@ -1,21 +1,19 @@
-import React from 'react'
-
 import { ListGroup } from 'reactstrap'
 import { Link } from 'react-router-dom'
 import CartItem from './CartItem'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { cartUiActions } from '../../../store/shopping-cart/cartUiSlice'
+import { toggleCartUi } from '../../../store/cart_ui/cart_ui.action'
 
 import '../../../styles/shopping-cart.css'
 
 const Carts = () => {
     const dispatch = useDispatch()
-    const cartProducts = useSelector((state) => state.cart.cartItems)
-    const totalAmount = useSelector((state) => state.cart.totalAmount)
+    const cartProducts = useSelector((state) => state.CartReducer.cartItems)
+    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
 
     const toggleCart = () => {
-        dispatch(cartUiActions.toggle())
+        dispatch(toggleCartUi(false))
     }
     return (
         <div className="cart__container">

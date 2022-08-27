@@ -5,15 +5,15 @@ import './product-card.css'
 import { Link } from 'react-router-dom'
 
 import { useDispatch } from 'react-redux'
-import { cartActions } from '../../../store/shopping-cart/cartSlice'
+import { addItem } from '../../../store/cart/cart.action'
 
 const ProductCard = (props) => {
-    const { id, title, img, price,total } = props.item
+    const { id, title, img, price, total } = props.item
     const dispatch = useDispatch()
 
     const addToCart = () => {
         dispatch(
-            cartActions.addItem({
+            addItem({
                 id,
                 title,
                 img,
@@ -40,7 +40,6 @@ const ProductCard = (props) => {
                     <button className="addToCart__btn" onClick={addToCart}>
                         Add to Cart
                     </button>
-
                 </div>
             </div>
         </div>

@@ -1,84 +1,58 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from 'react'
 
-import { Container } from "reactstrap";
-import logo from "../../assets/images/logo.png";
-import { NavLink, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Container } from 'reactstrap'
+import logo from '../../assets/images/logo.png'
+import { NavLink, Link } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleCartUi } from '../../store/cart_ui/cart_ui.action.jsx'
 
-import { cartUiActions } from "../../store/shopping-cart/cartUiSlice";
-
-import "./header.css";
+import './header.css'
 
 const nav__links = [
     {
-        display: "Trang chủ",
-        path: "/home",
+        display: 'Trang chủ',
+        path: '/home',
     },
     {
-        display: "Sản phẩm",
-        path: "/products",
+        display: 'Sản phẩm',
+        path: '/products',
     },
     {
-        display: "Giỏ hàng",
-        path: "/cart",
+        display: 'Giỏ hàng',
+        path: '/cart',
     },
     {
-        display: "Liên hệ",
-        path: "/contact",
+        display: 'Liên hệ',
+        path: '/contact',
     },
-];
+]
 
 const Header = () => {
-    const menuRef = useRef(null);
-    const headerRef = useRef(null);
-    const totalQuantity = useSelector((state) => state.cart.totalQuantity);
-    const dispatch = useDispatch();
+    const menuRef = useRef(null)
 
-    const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
+    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    const dispatch = useDispatch()
+
+    const toggleMenu = () => menuRef.current.classList.toggle('show__menu')
 
     const toggleCart = () => {
-        dispatch(cartUiActions.toggle());
-    };
-
-    // useEffect(() => {
-    //     window.addEventListener("scroll", () => {
-    //         if (
-    //             document.body.scrollTop > 80 ||
-    //             document.documentElement.scrollTop > 80
-    //         ) {
-    //             headerRef.current.classList.add("header__shrink");
-    //         } else {
-    //             headerRef.current.classList.remove("header__shrink");
-    //         }
-    //     });
-
-    //     return () => window.removeEventListener("scroll");
-    // }, []);
+        dispatch(toggleCartUi(true))
+    }
 
     return (
-        <header className="header header__shrink" >
+        <header className="header header__shrink">
             <Container>
                 <div className="nav__wrapper d-flex align-items-center justify-content-between">
-                    <Link to={"/"} className="logo">
+                    <Link to={'/'} className="logo">
                         <img src={logo} alt="logo" />
                         {/* <h5>Tasty Treat</h5> */}
                     </Link>
 
                     {/* ======= menu ======= */}
-                    <div
-                        className="navigation"
-                        ref={menuRef}
-                        onClick={toggleMenu}
-                    >
+                    <div className="navigation" ref={menuRef} onClick={toggleMenu}>
                         <div className="menu d-flex align-items-center gap-5">
                             {nav__links.map((item, index) => (
-                                <NavLink
-                                    to={item.path}
-                                    key={index}
-                                    className={(navClass) =>
-                                        navClass.isActive ? "active__menu" : ""
-                                    }
-                                >
+                                <NavLink to={item.path} key={index} className={(navClass) => (navClass.isActive ? 'active__menu' : '')}>
                                     {item.display}
                                 </NavLink>
                             ))}
@@ -106,7 +80,7 @@ const Header = () => {
                 </div>
             </Container>
         </header>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

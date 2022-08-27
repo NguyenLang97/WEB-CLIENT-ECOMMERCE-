@@ -4,17 +4,19 @@ import { ListGroupItem } from 'reactstrap'
 import '../../../styles/cart-item.css'
 
 import { useDispatch } from 'react-redux'
-import { cartActions } from '../../../store/shopping-cart/cartSlice'
+import { addItem, removeItem, deleteItem } from '../../../store/cart/cart.action'
+
+// import { cartActions } from '../../../store/shopping-cart/cartSlice'
 
 const CartItem = ({ item }) => {
     const { id, title, price, img, quantity, totalPrice } = item
-    console.log(item);
+    console.log(item)
 
     const dispatch = useDispatch()
 
     const incrementItem = () => {
         dispatch(
-            cartActions.addItem({
+            addItem({
                 id,
                 title,
                 price,
@@ -24,11 +26,11 @@ const CartItem = ({ item }) => {
     }
 
     const decreaseItem = () => {
-        dispatch(cartActions.removeItem(id))
+        dispatch(removeItem(id))
     }
 
     const deleteItem = () => {
-        dispatch(cartActions.deleteItem(id))
+        dispatch(deleteItem(id))
     }
 
     return (
@@ -40,7 +42,7 @@ const CartItem = ({ item }) => {
                     <div>
                         <h6 className="cart__product-title">{title}</h6>
                         <p className=" d-flex align-items-center gap-5 cart__product-price">
-                            {quantity}x <span>${totalPrice}</span>
+                            {quantity}x <span>${price}</span>
                         </p>
                         <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
                             <span className="increase__btn" onClick={incrementItem}>
