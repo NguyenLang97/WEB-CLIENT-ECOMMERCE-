@@ -29,7 +29,7 @@ const CartItem = ({ item }) => {
         dispatch(removeItem(id))
     }
 
-    const deleteItem = () => {
+    const delItem = () => {
         dispatch(deleteItem(id))
     }
 
@@ -42,8 +42,11 @@ const CartItem = ({ item }) => {
                     <div>
                         <h6 className="cart__product-title">{title}</h6>
                         <p className=" d-flex align-items-center gap-5 cart__product-price">
-                            {quantity}x <span>${price}</span>
+                            SL: {quantity}
+                            <span>{price} VND/SP</span>
+                            <span className="quantity">{Number(totalPrice)} VND</span>
                         </p>
+
                         <div className=" d-flex align-items-center justify-content-between increase__decrease-btn">
                             <span className="increase__btn" onClick={incrementItem}>
                                 <i class="ri-add-line"></i>
@@ -55,7 +58,7 @@ const CartItem = ({ item }) => {
                         </div>
                     </div>
 
-                    <span className="delete__btn" onClick={deleteItem}>
+                    <span className="delete__btn" onClick={delItem}>
                         <i class="ri-close-line"></i>
                     </span>
                 </div>

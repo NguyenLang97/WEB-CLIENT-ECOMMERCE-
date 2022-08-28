@@ -8,61 +8,79 @@ const initialState = {
 
 const CartReducer = (state = initialState, action) => {
     switch (action.type) {
-        case ADD_ITEM:
+        case ADD_ITEM: {
             const newItem = action.payload
             const existingItem = state.cartItems.find((item) => item.id === newItem.id)
-            console.log(newItem)
-            console.log(existingItem)
-            const newTotalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
+            state.totalQuantity++
 
             if (!existingItem) {
-                const newCartItems = { ...newItem, quantity: 1, totalPrice: newItem.price }
-                console.log(newCartItems)
-                console.log(newTotalAmount)
-                console.log(state)
+                // ===== note: if you use just redux you should not mute state array instead of clone the state array, but if you use redux toolkit that will not a problem because redux toolkit clone the array behind the scene
 
-                return {
-                    ...state,
-                    cartItems: [...state.cartItems, newCartItems],
-                    totalQuantity: ++state.totalQuantity,
-                    totalAmount: Number(state.totalAmount) + Number(newTotalAmount) + Number(newItem.price),
-                }
+                state.cartItems.push({
+                    id: newItem.id,
+                    title: newItem.title,
+                    img: newItem.img,
+                    price: newItem.price,
+                    quantity: 1,
+                    totalPrice: newItem.price,
+                })
             } else {
-                return {
-                    ...state,
-                    totalQuantity: ++state.totalQuantity,
-                    totalAmount: Number(state.totalAmount) + Number(existingItem.totalPrice),
-                }
+                existingItem.quantity++
+                existingItem.totalPrice = Number(existingItem.totalPrice) + Number(newItem.price)
+                console.log({ existingItem })
             }
-            console.log(state)
-        // case DELETE_ITEM:
-        // const id = action.payload
-        // const existingItem = state.cartItems.find((item) => item.id === id)
-        // state.totalQuantity++
 
-        // if (existingItem) {
-        //     state.cartItems = state.cartItems.filter((item) => item.id !== id)
-        //     state.totalQuantity = state.totalQuantity - existingItem.quantity
-        // }
+            state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
 
-        // state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
+            return {
+                ...state,
+                cartItems: [...state.cartItems],
+                totalQuantity: state.totalQuantity,
+                totalAmount: state.totalAmount,
+            }
+        }
 
-        // case REMOVE_ITEM:
-        // const id = action.payload
-        // const existingItem = state.cartItems.find((item) => item.id === id)
-        // state.totalQuantity--
+        case DELETE_ITEM: {
+            const id = action.payload
+            const existingItem = state.cartItems.find((item) => item.id === id)
 
-        // if (existingItem.quantity === 1) {
-        //     state.cartItems = state.cartItems.filter((item) => item.id !== id)
-        // } else {
-        //     existingItem.quantity--
-        //     existingItem.totalPrice = Number(existingItem.totalPrice) - Number(existingItem.price)
-        // }
+            if (existingItem) {
+                state.cartItems = state.cartItems.filter((item) => item.id !== id)
+                state.totalQuantity = state.totalQuantity - existingItem.quantity
+            }
 
-        // state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
+            state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
+
+            return {
+                ...state,
+                cartItems: [...state.cartItems],
+                totalQuantity: state.totalQuantity,
+                totalAmount: state.totalAmount,
+            }
+        }
+
+        // Xoa 1 san pham
+        case REMOVE_ITEM:
+            const id = action.payload
+            const existingItem = state.cartItems.find((item) => item.id === id)
+            state.totalQuantity--
+
+            if (existingItem.quantity === 1) {
+                state.cartItems = state.cartItems.filter((item) => item.id !== id)
+            } else {
+                existingItem.quantity--
+                existingItem.totalPrice = Number(existingItem.totalPrice) - Number(existingItem.price)
+            }
+
+            state.totalAmount = state.cartItems.reduce((total, item) => total + Number(item.price) * Number(item.quantity), 0)
 
         default:
-            return state
+            return {
+                ...state,
+                cartItems: [...state.cartItems],
+                totalQuantity: state.totalQuantity,
+                totalAmount: state.totalAmount,
+            }
     }
 }
 
