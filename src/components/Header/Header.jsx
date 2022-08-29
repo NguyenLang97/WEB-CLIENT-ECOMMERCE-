@@ -1,4 +1,8 @@
 import React, { useRef, useEffect } from 'react'
+import { MenuOutlined, ReconciliationOutlined, SearchOutlined, ShoppingCartOutlined, UserOutlined } from '@ant-design/icons'
+import { AutoComplete, Badge, Button, Drawer, Dropdown, Input, Menu, message } from 'antd'
+import Avatar from 'antd/lib/avatar/avatar'
+import defaultAvt from '../../assets/images/default-avt.png'
 
 import { Container } from 'reactstrap'
 import logo from '../../assets/images/logo.png'
@@ -29,6 +33,9 @@ const nav__links = [
 
 const Header = () => {
     const menuRef = useRef(null)
+    const isAuth = useSelector((state) => state.AuthReducer.currentUser)
+    const username = useSelector((state) => state.AuthReducer.infoUser)
+    const img = useSelector((state) => state.AuthReducer.infoUser)
 
     const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
     const dispatch = useDispatch()
@@ -66,13 +73,23 @@ const Header = () => {
 
                             <i class="ri-shopping-cart-2-line"></i>
                             <span className="cart__badge">{totalQuantity}</span>
+                            <span className="title">Giỏ hàng</span>
                         </span>
 
-                        <span className="user">
-                            <Link to="/login">
-                                <i class="ri-user-line"></i>
-                            </Link>
-                        </span>
+                        <Link to={isAuth ? '/account' : '/login'}>
+                            {!isAuth ? (
+                                <div className="d-flex flex-column navbar-tool-item p-l-0">
+                                    {/* <UserOutlined className="icon m-r-12" /> */}
+                                    <Avatar src={defaultAvt} className="" />
+                                    <span className="title">Đăng nhập</span>
+                                </div>
+                            ) : (
+                                <div className="d-flex flex-column navbar-tool-item p-l-0">
+                                    <Avatar src={img} size={20} className="" />
+                                    <span className="title">{username}</span>
+                                </div>
+                            )}
+                        </Link>
                         {/* mobile menu */}
                         <span className="mobile__menu" onClick={toggleMenu}>
                             <i class="ri-menu-line"></i>

@@ -3,7 +3,7 @@ const initialState = {
     isLoading: false,
     isLoggedIn: false,
     currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
-    infoUser: JSON.parse(localStorage.getItem('currentUserEmail')) || null,
+    infoUser: JSON.parse(localStorage.getItem('infoUser')) || null,
     error: null,
 }
 

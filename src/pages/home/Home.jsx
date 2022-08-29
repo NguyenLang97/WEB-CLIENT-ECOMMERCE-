@@ -38,11 +38,11 @@ const Home = () => {
     const [hotProduct, setHotProduct] = useState([])
 
     const currentUser = useSelector((state) => state.AuthReducer.currentUser)
-    const currentUserEmail = useSelector((state) => state.AuthReducer.infoUser)
+    const infoUser = useSelector((state) => state.AuthReducer.infoUser)
 
     useEffect(() => {
         localStorage.setItem('currentUser', JSON.stringify(currentUser))
-        localStorage.setItem('currentUserEmail', JSON.stringify(currentUserEmail))
+        localStorage.setItem('infoUser', JSON.stringify(infoUser))
     }, [currentUser])
 
     useEffect(() => {
