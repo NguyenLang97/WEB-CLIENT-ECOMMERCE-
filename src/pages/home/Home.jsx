@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import Helmet from '../../components/helmet/Helmet'
 import { Container, ListGroup, ListGroupItem, Col, Row } from 'reactstrap'
@@ -35,6 +36,14 @@ const Home = () => {
     const [filter, setFilter] = useState(allProducts)
     const [loading, setLoading] = useState(true)
     const [hotProduct, setHotProduct] = useState([])
+
+    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
+    const currentUserEmail = useSelector((state) => state.AuthReducer.infoUser)
+
+    useEffect(() => {
+        localStorage.setItem('currentUser', JSON.stringify(currentUser))
+        localStorage.setItem('currentUserEmail', JSON.stringify(currentUserEmail))
+    }, [currentUser])
 
     useEffect(() => {
         const unsub = onSnapshot(

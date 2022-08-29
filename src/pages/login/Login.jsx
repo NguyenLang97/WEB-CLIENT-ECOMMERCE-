@@ -8,8 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authStart } from '../../store/auth/auth.action'
 
 const Login = () => {
-    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
-
+    
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
@@ -24,9 +23,7 @@ const Login = () => {
         dispatch(authStart({ email, password }))
         navigate('/home')
     }
-    useEffect(() => {
-        localStorage.setItem('currentUser', JSON.stringify(currentUser))
-    }, [currentUser])
+    
 
     return (
         <Helmet title="Login">
@@ -37,10 +34,10 @@ const Login = () => {
                         <Col lg="6" md="6" sm="12" className="m-auto text-center">
                             <form className="form mb-5" onSubmit={submitHandler}>
                                 <div className="form__group">
-                                    <input type="email" placeholder="Email" required ref={loginEmailRef} />
+                                    <input type="email" placeholder="Email" value="vanlang@gmail.com" required ref={loginEmailRef} />
                                 </div>
                                 <div className="form__group">
-                                    <input type="password" placeholder="Password" required ref={loginPasswordRef} />
+                                    <input type="password" placeholder="Password" value="123123" required ref={loginPasswordRef} />
                                 </div>
                                 <button type="submit" className="addTOCart__btn">
                                     Login

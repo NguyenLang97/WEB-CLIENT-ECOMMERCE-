@@ -10,6 +10,7 @@ import '../../../styles/shopping-cart.css'
 const Carts = () => {
     const dispatch = useDispatch()
     const cartProducts = useSelector((state) => state.CartReducer.cartItems)
+    // const cartProducts = JSON.parse(localStorage.getItem('cart'))
     const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
 
     const toggleCart = () => {

@@ -9,8 +9,14 @@ import Checkout from '../pages/checkout/Checkout'
 import Contact from '../pages/contact/Contact'
 import Login from '../pages/login/Login'
 import Register from '../pages/register/Register'
+import { useSelector } from 'react-redux'
 
 const Routers = () => {
+    const currentUser = useSelector((state) => state.AuthReducer.currentUser)
+    const RequireAuth = ({ children }) => {
+        console.log('RequireAuth::', currentUser)
+        return currentUser ? children : <Navigate to="/login" />
+    }
     return (
         <Routes>
             <Route path="/" element={<Navigate to="/home" />} />
@@ -18,7 +24,14 @@ const Routers = () => {
             <Route path="/products" element={<AllProducts />} />
             <Route path="/products/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<Checkout />} />
+            <Route
+                path="checkout"
+                element={
+                    <RequireAuth>
+                        <Checkout />
+                    </RequireAuth>
+                }
+            />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/contact" element={<Contact />} />

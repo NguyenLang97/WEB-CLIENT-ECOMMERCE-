@@ -1,39 +1,58 @@
-import React, { useState } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Container, Row, Col } from 'reactstrap'
 import CommonSection from '../../components/ui/common-section/CommonSection'
 import Helmet from '../../components/helmet/Helmet'
+import { doc, setDoc, addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import { db } from '../../firebase/firebase_config'
 
 import './checkout.css'
 import CartTable from '../cart_page/cartTable/CartTable'
 
 const Checkout = () => {
-    const [enterName, setEnterName] = useState('')
-    const [enterEmail, setEnterEmail] = useState('')
-    const [enterNumber, setEnterNumber] = useState('')
-    const [enterCountry, setEnterCountry] = useState('')
-    const [enterCity, setEnterCity] = useState('')
-    const [postalCode, setPostalCode] = useState('')
+    const cartItems = useSelector((state) => state.CartReducer.cartItems)
+    const totalQuantity = useSelector((state) => state.CartReducer.totalQuantity)
+    console.log({ totalQuantity })
+    const totalAmount = useSelector((state) => state.CartReducer.totalAmount)
+    console.log({ cartItems })
+    const { address, phone, fullname, email } = useSelector((state) => state.AuthReducer.infoUser)
+    const userId = useSelector((state) => state.AuthReducer.currentUser)
 
-    const shippingInfo = []
+    const [enterFullName, setEnterFullName] = useState(fullname)
+    const [enterEmail, setEnterEmail] = useState(email)
+    const [enterPhone, setEnterPhone] = useState(phone)
+    const [enterAddress, setEnterAddress] = useState(address)
+
     const cartTotalAmount = useSelector((state) => state.CartReducer.totalAmount)
     const shippingCost = 30
 
-    const totalAmount = cartTotalAmount + Number(shippingCost)
+    const totalAmountOrder = cartTotalAmount + Number(shippingCost)
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault()
         const userShippingAddress = {
-            name: enterName,
+            name: enterFullName,
             email: enterEmail,
-            phone: enterNumber,
-            country: enterCountry,
-            city: enterCity,
-            postalCode: postalCode,
+            phone: enterPhone,
+            address: enterAddress,
+            userId: userId,
+            cartItems,
+            totalQuantity,
+            totalAmountOrder,
         }
 
-        shippingInfo.push(userShippingAddress)
-        console.log(shippingInfo)
+        console.log({ userShippingAddress })
+
+        try {
+            await addDoc(collection(db, 'order'), {
+                ...userShippingAddress,
+                timeStamp: serverTimestamp(),
+            })
+            // navigate(-1)
+        } catch (err) {
+            console.log(err)
+            // setError(true)
+        }
     }
 
     return (
@@ -52,29 +71,49 @@ const Checkout = () => {
                 <Container>
                     <Row>
                         <Col lg="8" md="6">
-                            <h6 className="mb-4">Shipping Address</h6>
+                            <h6 className="mb-4">Thông tin giao hàng</h6>
                             <form className="checkout__form" onSubmit={submitHandler}>
                                 <div className="form__group">
-                                    <input type="text" placeholder="Enter your name" required onChange={(e) => setEnterName(e.target.value)} />
+                                    <label htmlFor="">Tên người nhận</label>
+                                    <input type="text" placeholder="Enter your name" required value={enterFullName} onChange={(e) => setEnterFullName(e.target.value)} />
                                 </div>
 
                                 <div className="form__group">
-                                    <input type="email" placeholder="Enter your email" required onChange={(e) => setEnterEmail(e.target.value)} />
+                                    <label htmlFor="">Email</label>
+
+                                    <input type="email" placeholder="Enter your email" value={enterEmail} required onChange={(e) => setEnterEmail(e.target.value)} />
                                 </div>
                                 <div className="form__group">
-                                    <input type="number" placeholder="Phone number" required onChange={(e) => setEnterNumber(e.target.value)} />
+                                    <label htmlFor="">Số điện thoại</label>
+
+                                    <input type="number" placeholder="Phone number" value={enterPhone} required onChange={(e) => setEnterPhone(e.target.value)} />
                                 </div>
                                 <div className="form__group">
-                                    <input type="text" placeholder="Country" required onChange={(e) => setEnterCountry(e.target.value)} />
+                                    <label htmlFor="">Địa chỉ nhận hàng</label>
+
+                                    <input type="text" placeholder="Country" value={enterAddress} required onChange={(e) => setEnterAddress(e.target.value)} />
                                 </div>
-                                <div className="form__group">
-                                    <input type="text" placeholder="City" required onChange={(e) => setEnterCity(e.target.value)} />
+                                <div className="p-12 bg-white bor-rad-8 m-tb-16">
+                                    <h2 className="m-b-8">Phương thức thanh toán</h2>
+                                    <p>Thông tin thanh toán của bạn sẽ luôn được bảo mật</p>
+                                    <Row gutter={[16, 16]}>
+                                        <Col span={24} md={12}>
+                                            <div className="p-tb-8 p-lr-16 bg-gray item-active">
+                                                <b className="font-size-16px">Thanh toán khi nhận hàng</b>
+                                                <p>Thanh toán bằng tiền mặt khi nhận hàng tại nhà hoặc showroom.</p>
+                                            </div>
+                                        </Col>
+                                        <Col span={24} md={12}>
+                                            <div className="p-tb-8 p-lr-16 bg-gray">
+                                                <b className="font-size-16px">Thanh toán Online qua cổng VNPAY</b>
+                                                <p>Thanh toán qua Internet Banking, Visa, Master, JCB, VNPAY-QR.</p>
+                                            </div>
+                                        </Col>
+                                    </Row>
                                 </div>
-                                {/* <div className="form__group">
-                                    <input type="number" placeholder="Postal code" required onChange={(e) => setPostalCode(e.target.value)} />
-                                </div> */}
+
                                 <button type="submit" className="addTOCart__btn">
-                                    Payment
+                                    ĐẶT HÀNG NGAY
                                 </button>
                             </form>
                         </Col>
@@ -89,7 +128,7 @@ const Checkout = () => {
                                 </h6>
                                 <div className="checkout__total">
                                     <h5 className="d-flex align-items-center justify-content-between">
-                                        Total: <span>${totalAmount}</span>
+                                        Total: <span>${totalAmountOrder}</span>
                                     </h5>
                                 </div>
                             </div>

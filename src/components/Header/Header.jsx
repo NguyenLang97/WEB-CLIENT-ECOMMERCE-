@@ -63,6 +63,7 @@ const Header = () => {
                     <div className="nav__right text d-flex align-items-center gap-4">
                         <span className="cart__icon" onClick={toggleCart}>
                             {/* <i class="ri-shopping-basket-line"></i> */}
+
                             <i class="ri-shopping-cart-2-line"></i>
                             <span className="cart__badge">{totalQuantity}</span>
                         </span>

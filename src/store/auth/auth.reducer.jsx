@@ -3,6 +3,7 @@ const initialState = {
     isLoading: false,
     isLoggedIn: false,
     currentUser: JSON.parse(localStorage.getItem('currentUser')) || null,
+    infoUser: JSON.parse(localStorage.getItem('currentUserEmail')) || null,
     error: null,
 }
 
@@ -19,7 +20,8 @@ const AuthReducer = (state = initialState, { type, payload }) => {
                 ...state,
                 isLoading: false,
                 isLoggedIn: true,
-                currentUser: payload,
+                currentUser: payload.userID,
+                infoUser: payload.user,
             }
         case AUTH_FAIL:
             return {
